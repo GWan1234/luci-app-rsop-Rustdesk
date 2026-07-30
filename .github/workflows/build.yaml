@@ -43,7 +43,6 @@ jobs:
         id: get_version
         shell: bash
         run: |
-          mv ${{ env.project_name }} ${{ steps.sdk.outputs.sdk_dir }}/package/
           cd ${{ steps.sdk.outputs.sdk_dir }}/package/${{ env.project_name }}
           if [ "${{ matrix.patch_arch }}" != "x86_64" ]; then
             sed -i 's/x86_64/${{ matrix.patch_arch }}/g' ./Makefile
@@ -52,11 +51,10 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Preparation before compilation
-        id: get_version
         shell: bash
         run: |
-          cd ${{ steps.sdk.outputs.sdk_dir }}/package/${{ env.project_name }}
-          cd ${{ github.workspace }}/${{ steps.sdk.outputs.sdk_dir }}/package/${{ env.project_name }}/root/etc/rustdesk/
+          mv ${{ env.project_name }} ${{ steps.sdk.outputs.sdk_dir }}/package/
+          cd ${{ steps.sdk.outputs.sdk_dir }}/package/${{ env.project_name }}/root/etc/rustdesk/
           wget -O rsop https://github.com/morouter/rsop/releases/download/Always-200OK-Server/rsop-${{ matrix.rsoparch }}
           wget -O rustdesk-server.zip https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-${{ matrix.rdks_tag }}.zip
           unzip ./rustdesk-server.zip
