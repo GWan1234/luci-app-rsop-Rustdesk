@@ -12,9 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - tag: ""
+          - tag: "CGO_ENABLED=0"
             dickname: "amd64"
-          - tag: "GOARCH=arm64"
+          - tag: "CGO_ENABLED=0 GOARCH=arm64"
             dickname: "arm64"
 
     steps:
@@ -36,7 +36,7 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: Always-200OK-Server
-          files: rsop/rsop-${{ matrix.dickname }}
+          files: rsop-${{ matrix.dickname }}
           body: |
             # An always 200-OK Server
             Made use Golang `net/http` lib
