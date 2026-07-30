@@ -41,7 +41,6 @@ Additional operations are required on the source code:
 cd ⚠️sdk-root/package/rsop/root/etc/rustdesk
 rm DONOTREMOVE
 wget "https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-⚠️ARCH.zip"
-
 ```
 ## ⚖️ License
 This project was licensed under the [GNU Affero General Public License Version 3 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
