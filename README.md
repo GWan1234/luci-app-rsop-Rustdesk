@@ -1,15 +1,12 @@
 # rsop
-> Rustdesk Server for OpenWrt
-## ⬇️ Downloads
-[GitHub Release](https://github.com/mokanove/rsop/releases)
+Rustdesk Server for OpenWrt
 ## 🚀 Features
-- Built-in latest version of Rustdesk-Server.
+- Built-in latest version of Rustdesk-Server and always200OKserver.
 - It can run smoothly with just a few lines of commands.
 - It can be set as a daemon process and start automatically on boot.
-## ⚠️ Warning
-- **Only support aarch64 and amd64 CPU Arch**
-- **Only support OpenWrt Version 25.12 or later(using apk pm)**
-## ⚙ Commands
+## ⬇️ Downloads
+[GitHub Release](https://github.com/moaeiou/rsop/releases)
+## 📚 How to use
 - **Run**:
 ```
 /etc/init.d/rsop start
@@ -28,25 +25,25 @@ cat /etc/rustdesk/id_ed25519.pub
 ```
 - **Use the built-in utils to cheking the stats**:
 ```
-/etc/rustdesk/go-rustdesk-server doctor localhost
+/etc/rustdesk/rustdesk-utils doctor localhost
 ```
 - **Automatic startup**
-> It usually starts automatically. If it does not start automatically, please execute the command.
+It usually starts automatically. If it does not start automatically, please execute the command.
  ```
 /etc/init.d/rsop enable
 ```
 ## 🛠 How to self-build
-[Generic Document](https://867678.xyz/doc/build)
-> It is assumed that you are already in the SDK root directory.
->
-> Additional operations are required on the source code:
+[Generic Document](https://867678.xyz/doc/OpenWrt)
+It is assumed that you are already in the SDK root directory.
+
+Additional operations are required on the source code:
 ```
 cd ⚠️sdk-root/package/rsop/root/etc/rustdesk
 rm DONOTREMOVE
-wget "https://github.com/mokanove/rsop/releases/latest/download/go-rustdesk-server-linux-⚠️ARCH-⚠️LIBC.zip"
+wget "https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-⚠️ARCH.zip"
 
 ```
 ## ⚖️ License
-> This application is licensed under the [GNU Affero General Public License Version 3 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
->
-> This project references and incorporates components from [RustDesk-Server](https://github.com/rustdesk/rustdesk-server).
+This project was licensed under the [GNU Affero General Public License Version 3 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
+
+This project has included the [RustDesk-Server](https://github.com/rustdesk/rustdesk-server).
