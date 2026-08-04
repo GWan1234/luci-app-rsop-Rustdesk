@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   build:
-    name: Build Always 200OK Server for ${{ matrix.dickname }}
+    name: Build Always OK Server for ${{ matrix.dickname }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,8 +30,7 @@ jobs:
       - name: Build!
         shell: bash
         run: |
-          ${{ matrix.tag }} go build
-          mv rsop rsop-${{ matrix.dickname }}
+          ${{ matrix.tag }} go build -o rsop-${{ matrix.dickname }}
 
       - name: Release
         uses: softprops/action-gh-release@master
@@ -43,11 +42,12 @@ jobs:
             Made use Golang `net/http` lib
             ## 🚀 Uses
             - When you using `Rustdesk-server`, The rustdesk client sometimes will be sent a post to server:21114
-            - But if you not bought `Rustdesk-Server-Pro`, It maybe **TimeOut Error**.
-            - So this is a fake server that denied this problem.
-            - It run an always OK Server to Fuck this error.
+            ## ? Why do this
+            - But if you not bought `Rustdesk-Server-Pro`, It will be **TimeOut Error**.
+            - So this is a fake server that solve this problem.
+            - It is an always OK Server to Fuck this error.
             ## 🙏 Acknowledgements
-            People: MoAEIOU, Claude
+            People: <https://867678.xyz>, <https://claude.ai>
             ## ⚖️ License
             GNU AGPL-v3-or-later.
         env:
