@@ -83,7 +83,9 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: V${{ steps.get_version.outputs.version }}
-          files: luci-*.apk
+          files: |
+            luci-i18n-rsop-*.apk
+            luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
           body: |
             # 📝 Release Note
             - Fixes and improvements
