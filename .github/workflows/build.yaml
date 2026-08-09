@@ -74,7 +74,7 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
-          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
           cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk luci-i18n-rsop-zh-cn.apk
           cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk luci-i18n-rsop-zh-tw.apk
           cp luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk luci-i18n-rsop-${{ matrix.patch_arch }}.apk
