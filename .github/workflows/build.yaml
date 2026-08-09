@@ -95,6 +95,6 @@ jobs:
       - name: Send to mirror
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
-          local: sync/*.apk
+          local: sync/
           remote: /var/www/html/luci-app/rsop/
           key: ${{ secrets.CC_LA_KEY }}
