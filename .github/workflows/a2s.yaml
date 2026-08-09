@@ -2,7 +2,7 @@ name: Just like my liquor
 
 on:
   workflow_run:
-    workflows: ["Automatically Build sing-box"]
+    workflows: ["I go to Comicon, guns, and thrash metal shows"]
     types:
       - completed
   workflow_dispatch:
