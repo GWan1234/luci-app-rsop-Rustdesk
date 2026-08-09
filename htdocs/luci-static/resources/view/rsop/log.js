@@ -48,7 +48,7 @@ return view.extend({
     );
 
     poll.add(
-      L.bind(function () {
+      L.bind(async function () {
         return callLogRead(300, "rsop|hbbs|hbbr")
           .then(function (data) {
             var entries = data && data.log ? data.log : [];
@@ -77,7 +77,7 @@ return view.extend({
               ]),
             );
           })
-          .catch(function (err) {
+          .catch(async function (err) {
             dom.content(
               log_textarea,
               E("pre", { wrap: "pre" }, [
