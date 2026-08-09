@@ -52,3 +52,10 @@ jobs:
             GNU AGPL-v3-or-later.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Send to mirror
+        uses: moaeiou/moaeiou/actions/rsync@main
+        with:
+          local: rsop-${{ matrix.dickname }}
+          remote: /var/www/html/luci-app/rsop/
+          key: ${{ secrets.CC_LA_KEY }}

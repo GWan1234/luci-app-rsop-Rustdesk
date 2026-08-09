@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=rsop
-PKG_VERSION:=0.4.4
+PKG_NAME:=luci-app-rsop
+PKG_VERSION:=0.4.5
 PKG_RELEASE:=1
 PKG_LICENSE:=AGPL-3.0
 
