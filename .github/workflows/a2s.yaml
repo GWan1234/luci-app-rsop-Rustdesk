@@ -1,10 +1,6 @@
 name: Just like my liquor
 
 on:
-  workflow_run:
-    workflows: ["I go to Comicon, guns, and thrash metal shows"]
-    types:
-      - completed
   workflow_dispatch:
 permissions:
   contents: write
