@@ -96,5 +96,5 @@ jobs:
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
           local: sync/*.apk
-          remote: /var/www/html/luci-app/oplist/
+          remote: /var/www/html/luci-app/rsop/
           key: ${{ secrets.CC_LA_KEY }}
