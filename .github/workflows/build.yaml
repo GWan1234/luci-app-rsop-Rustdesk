@@ -74,8 +74,10 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
-          ls ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/x86_64/base/
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/*.apk ${{ github.workspace }}/luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          mkdir -p sync/
+          cp ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk sync/
+          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-*.apk sync/
 
       - name: Release
         uses: softprops/action-gh-release@master
@@ -93,6 +95,6 @@ jobs:
       - name: Send to mirror
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
-          local: luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          local: sync/*.apk
           remote: /var/www/html/luci-app/rsop/
           key: ${{ secrets.CC_LA_KEY }}
