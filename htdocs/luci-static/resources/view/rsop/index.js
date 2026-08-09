@@ -40,7 +40,7 @@ async function getBinaryStatus() {
   return res[0] != null && res[1] != null && res[2] != null;
 }
 
-function getServerKey() {
+async function getServerKey() {
   const key = await L.resolveDefault(
     fs.read("/etc/rustdesk/id_ed25519.pub"),
     null,

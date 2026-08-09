@@ -6,9 +6,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "RustDesk Server"
-msgstr "RustDesk 伺服器"
-
 msgid "Overview"
 msgstr "總覽"
 
@@ -69,17 +66,5 @@ msgstr "已複製！"
 msgid "Copy failed"
 msgstr "複製失敗"
 
-msgid "Service Logs"
-msgstr "服務日誌"
-
 msgid "Loading..."
 msgstr "載入中..."
-
-msgid "Log is empty."
-msgstr "日誌為空。"
-
-msgid "Failed to load logs: %s"
-msgstr "無法取得日誌：%s"
-
-msgid "Refresh every %s seconds."
-msgstr "每 %s 秒重新整理一次。"
