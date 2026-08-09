@@ -1,8 +1,8 @@
 "use strict";
-"require view";
-"require rpc";
+"require dom";
 "require poll";
-"require ui";
+"require rpc";
+"require view";
 
 var callLogRead = rpc.declare({
   object: "log",
@@ -20,85 +20,92 @@ function formatTime(ts) {
 }
 
 return view.extend({
-  logElement: null,
-
-  load: function () {
-    this.refreshLog = this.refreshLog.bind(this);
-    poll.add(this.refreshLog, 5);
-
-    return Promise.resolve();
-  },
-
   render: function () {
-    this.logElement = E("textarea", {
-      class: "cbi-input-textarea",
-      readonly: "readonly",
-      rows: "24",
-      style: "width:100%; font-family:monospace",
-    });
+    var css =
+      "					\
+			#log_textarea {				\
+				padding: 10px;			\
+				text-align: left;		\
+			}					\
+			#log_textarea pre {			\
+				padding: .5rem;			\
+				word-break: break-all;		\
+				margin: 0;			\
+			}";
 
-    this.refreshLog();
-
-    return E("div", { class: "cbi-map" }, [
-      E("h2", { class: "cbi-map-title" }, _("Service Logs")),
+    var log_textarea = E(
+      "div",
+      { id: "log_textarea" },
       E(
-        "p",
-        { class: "cbi-map-descr" },
-        _(
-          "Logs mentioning rsop, hbbs or hbbr are shown below. The page refreshes automatically every 5 seconds.",
-        ),
+        "img",
+        {
+          src: L.resource("icons/loading.svg"),
+          alt: _("Loading..."),
+          style: "vertical-align:middle",
+        },
+        _("Collecting data..."),
       ),
-      E("div", { class: "cbi-section" }, [
-        this.logElement,
-        E("div", { class: "cbi-section-actions" }, [
+    );
+
+    poll.add(
+      L.bind(function () {
+        return callLogRead(300, "rsop|hbbs|hbbr")
+          .then(function (data) {
+            var entries = data && data.log ? data.log : [];
+            var lines = [];
+
+            entries.sort(function (a, b) {
+              return (a.id || 0) - (b.id || 0);
+            });
+
+            for (var i = 0; i < entries.length; i++) {
+              var entry = entries[i];
+              var source = entry.source || "log";
+              var msg = entry.msg || "";
+
+              if (!/rsop|hbbs|hbbr/i.test(source + " " + msg)) continue;
+
+              lines.push(
+                "%s %s: %s".format(formatTime(entry.time), source, msg),
+              );
+            }
+
+            dom.content(
+              log_textarea,
+              E("pre", { wrap: "pre" }, [
+                lines.length ? lines.join("\n") : _("Log is empty."),
+              ]),
+            );
+          })
+          .catch(function (err) {
+            dom.content(
+              log_textarea,
+              E("pre", { wrap: "pre" }, [
+                _("Failed to load logs: %s").format(err),
+              ]),
+            );
+          });
+      }),
+    );
+
+    return E([
+      E("style", [css]),
+      E("div", { class: "cbi-map" }, [
+        E("div", { class: "cbi-section" }, [
+          E("h2", { class: "cbi-map-title" }, _("Service Logs")),
+          log_textarea,
           E(
-            "button",
-            {
-              class: "cbi-button cbi-button-action",
-              click: ui.createHandlerFn(this, "refreshLog"),
-            },
-            _("Refresh"),
+            "div",
+            { style: "text-align:right" },
+            E(
+              "small",
+              {},
+              _("Refresh every %s seconds.").format(L.env.pollinterval),
+            ),
           ),
         ]),
       ]),
     ]);
-  },
-
-  refreshLog: function (ev) {
-    var self = this;
-
-    return callLogRead(300, "rsop|hbbs|hbbr")
-      .then(function (data) {
-        var entries = data && data.log ? data.log : [];
-        var lines = [];
-
-        entries.sort(function (a, b) {
-          return (a.id || 0) - (b.id || 0);
-        });
-
-        for (var i = 0; i < entries.length; i++) {
-          var entry = entries[i];
-          var source = entry.source || "log";
-          var msg = entry.msg || "";
-
-          if (!/rsop|hbbs|hbbr/i.test(source + " " + msg)) continue;
-
-          lines.push("%s %s: %s".format(formatTime(entry.time), source, msg));
-        }
-
-        self.logElement.value = lines.length
-          ? lines.join("\n")
-          : _("No log entries yet.");
-
-        if (self.logElement.scrollHeight)
-          self.logElement.scrollTop = self.logElement.scrollHeight;
-      })
-      .catch(function (e) {
-        ui.addNotification(
-          null,
-          E("p", _("Failed to load logs: %s").format(e.message)),
-        );
-      });
   },
 
   handleSaveApply: null,

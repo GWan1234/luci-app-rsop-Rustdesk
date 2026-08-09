@@ -1,4 +1,4 @@
-# luci-app-oplist - Traditional Chinese Translation
+# luci-app-rsop - Traditional Chinese Translation
 # SPDX-License-Identifier: AGPL-3.0
 #
 msgid ""
@@ -15,14 +15,29 @@ msgstr "總覽"
 msgid "Logs"
 msgstr "日誌"
 
-msgid "Running"
+msgid "Rustdesk Server for OpenWrt."
+msgstr "關於Rustdesk Server的OpenWrt支援。"
+
+msgid "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device."
+msgstr "如果無法從公用網際網路存取 RustDesk 伺服器，請檢查 21114-21119 連接埠的 TCP 與 UDP 是否已在防火牆放行，並正確轉送至本裝置。"
+
+msgid "Collecting data..."
+msgstr "正在收集資料..."
+
+msgid "BINARY MISSING"
+msgstr "程式檔缺失"
+
+msgid "RUNNING"
 msgstr "執行中"
 
-msgid "Stopped"
-msgstr "已停止"
+msgid "NOT RUNNING"
+msgstr "未執行"
 
-msgid "Checking..."
-msgstr "檢查中..."
+msgid "Server Key"
+msgstr "伺服器金鑰"
+
+msgid "No key yet. Start the service once to generate it."
+msgstr "尚未產生金鑰。請先啟動一次服務以產生金鑰。"
 
 msgid "Start"
 msgstr "啟動"
@@ -30,44 +45,8 @@ msgstr "啟動"
 msgid "Stop"
 msgstr "停止"
 
-msgid "Overall"
-msgstr "整體狀態"
-
-msgid "Process"
-msgstr "程序"
-
-msgid "Status"
-msgstr "狀態"
-
-msgid "PID"
-msgstr "PID"
-
-msgid "Not available"
-msgstr "暫無"
-
-msgid "No key yet. Start the service once to generate it."
-msgstr "尚未產生金鑰。請先啟動一次服務以產生金鑰。"
-
-msgid "Manage the RustDesk Server running on this device."
-msgstr "管理本裝置上執行的 RustDesk 伺服器。"
-
-msgid "Service Status"
-msgstr "服務狀態"
-
-msgid "Server Key"
-msgstr "伺服器金鑰"
-
-msgid "The server key is generated on the first start and stored at /etc/rustdesk/id_ed25519.pub."
-msgstr "伺服器金鑰於首次啟動時產生，儲存在 /etc/rustdesk/id_ed25519.pub。"
-
 msgid "Copy"
 msgstr "複製"
-
-msgid "Public Access"
-msgstr "公用存取"
-
-msgid "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device."
-msgstr "如果無法從公用網際網路存取 RustDesk 伺服器，請檢查 21114-21119 連接埠的 TCP 與 UDP 是否已在防火牆放行，並正確轉送至本裝置。"
 
 msgid "Are you sure you want to stop the RustDesk Server?"
 msgstr "確定要停止 RustDesk 伺服器嗎？"
@@ -93,14 +72,14 @@ msgstr "複製失敗"
 msgid "Service Logs"
 msgstr "服務日誌"
 
-msgid "Logs mentioning rsop, hbbs or hbbr are shown below. The page refreshes automatically every 5 seconds."
-msgstr "下方顯示與 rsop、hbbs 或 hbbr 相關的日誌，頁面每 5 秒自動重新整理。"
+msgid "Loading..."
+msgstr "載入中..."
 
-msgid "No log entries yet."
-msgstr "暫無日誌記錄。"
-
-msgid "Refresh"
-msgstr "重新整理"
+msgid "Log is empty."
+msgstr "日誌為空。"
 
 msgid "Failed to load logs: %s"
 msgstr "無法取得日誌：%s"
+
+msgid "Refresh every %s seconds."
+msgstr "每 %s 秒重新整理一次。"
