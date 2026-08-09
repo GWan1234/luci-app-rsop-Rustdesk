@@ -74,6 +74,7 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
+          ls ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/
           mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/*.apk ${{ github.workspace }}/luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
 
       - name: Release
