@@ -63,7 +63,14 @@ Additional operations are required on the source code:
 ```bash
 cd ⚠️sdk-root/package/rsop/root/etc/rustdesk
 rm DONOTREMOVE
-wget https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-⚠️ARCH.zip
+wget -O rustdesk-server.zip https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-⚠️ARCH.zip
+wget -O rsop https://github.com/morouter/rsop/releases/download/Always-200OK-Server/rsop-⚠️ARCH-musl
+unzip ./rustdesk-server.zip
+mv ./⚠️ARCH/hbbr ./
+mv ./⚠️ARCH/hbbs ./
+mv ./⚠️ARCH/rustdesk-utils ./
+rm -rf ./⚠️ARCH ./rustdesk-server.zip DONOTREMOVE ../../go.mod ../../main.go
+chmod +x ./hbbr ./hbbs ./rustdesk-utils ./rsop
 ```
 
 need build the Always 200OK Server?

@@ -14,9 +14,9 @@ jobs:
       matrix:
         include:
           - tag: "CGO_ENABLED=0"
-            dickname: "amd64"
+            dickname: "amd64-musl"
           - tag: "CGO_ENABLED=0 GOARCH=arm64"
-            dickname: "arm64"
+            dickname: "arm64-musl"
 
     steps:
       - name: Checkout
@@ -57,5 +57,5 @@ jobs:
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
           local: rsop-${{ matrix.dickname }}
-          remote: /var/www/html/luci-app/rsop/
+          remote: /var/www/html/luci-app/rsop/a2s
           key: ${{ secrets.CC_LA_KEY }}
