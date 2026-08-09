@@ -3,7 +3,8 @@
     "title": "RustDesk",
     "order": 99,
     "action": {
-      "type": "firstchild"
+      "type": "view",
+      "path": "rsop/index"
     },
     "depends": {
       "acl": ["luci-app-rsop"]
