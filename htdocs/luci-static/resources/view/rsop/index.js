@@ -18,6 +18,8 @@ var callRcInit = rpc.declare({
   params: ["name", "action"],
 });
 
+var isRunning = false;
+
 async function getServiceStatus() {
   const res = await L.resolveDefault(callServiceList("rsop"), {});
   try {
@@ -75,6 +77,15 @@ async function updateStatus() {
   if (status) status.innerHTML = renderStatus(res[0], res[1]);
   var key = document.getElementById("server_key");
   if (key) key.value = res[2] || "";
+
+  isRunning = res[1];
+  var btn = document.getElementById("toggle_button");
+  if (btn) {
+    btn.textContent = isRunning ? _("Stop") : _("Start");
+    btn.className = isRunning
+      ? "cbi-button cbi-button-negative"
+      : "cbi-button cbi-button-action important";
+  }
 }
 
 return view.extend({
@@ -86,16 +97,18 @@ return view.extend({
     );
 
     return E("div", { class: "cbi-map" }, [
-      E("div", { class: "cbi-section" }, [
-        E("h2", { class: "cbi-map-title" }, _("RustDesk Server")),
-        E("div", { class: "cbi-map-descr" }, [
-          _("Rustdesk Server for OpenWrt."),
-          E("br"),
-          _(
-            "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device.",
-          ),
-        ]),
+      E("h2", { class: "cbi-map-title" }, _("RustDesk Server")),
+      E("div", { class: "cbi-map-descr" }, [
+        _("Rustdesk Server for OpenWrt."),
+        E("br"),
+        _(
+          "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device.",
+        ),
+      ]),
+      E("div", { class: "cbi-section", id: "status_bar" }, [
         E("p", { id: "service_status" }, _("Collecting data...")),
+      ]),
+      E("div", { class: "cbi-section" }, [
         E("h3", {}, _("Server Key")),
         E("textarea", {
           id: "server_key",
@@ -108,19 +121,11 @@ return view.extend({
           E(
             "button",
             {
+              id: "toggle_button",
               class: "cbi-button cbi-button-action important",
-              click: ui.createHandlerFn(this, "handleAction", true),
+              click: ui.createHandlerFn(this, "handleAction"),
             },
-            _("Start"),
-          ),
-          " ",
-          E(
-            "button",
-            {
-              class: "cbi-button cbi-button-action important",
-              click: ui.createHandlerFn(this, "handleAction", false),
-            },
-            _("Stop"),
+            _("Collecting data..."),
           ),
           " ",
           E(
@@ -136,7 +141,9 @@ return view.extend({
     ]);
   },
 
-  handleAction: function (start, ev) {
+  handleAction: function (ev) {
+    var start = !isRunning;
+
     if (
       !start &&
       !confirm(_("Are you sure you want to stop the RustDesk Server?"))

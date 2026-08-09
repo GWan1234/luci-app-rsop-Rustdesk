@@ -8,14 +8,5 @@
     "depends": {
       "acl": ["luci-app-rsop"]
     }
-  },
-
-  "admin/services/rsop/index": {
-    "title": "Overview",
-    "order": 1,
-    "action": {
-      "type": "view",
-      "path": "rsop/index"
-    }
   }
 }
