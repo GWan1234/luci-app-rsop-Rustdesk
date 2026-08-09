@@ -1,21 +1,21 @@
 {
-	"luci-app-rsop": {
-		"description": "Grant access to RustDesk Server administration",
-		"read": {
-			"file": {
-				"/etc/rustdesk/id_ed25519.pub": [ "read" ]
-			},
-			"ubus": {
-				"file": [ "read" ],
-				"log": [ "read" ],
-				"rc": [ "list" ],
-				"service": [ "list" ]
-			}
-		},
-		"write": {
-			"ubus": {
-				"rc": [ "init" ]
-			}
-		}
-	}
+  "luci-app-rsop": {
+    "description": "ACL for LuCI-APP-RSOP",
+    "read": {
+      "file": {
+        "/etc/rustdesk/id_ed25519.pub": ["read"]
+      },
+      "ubus": {
+        "file": ["read"],
+        "log": ["read"],
+        "rc": ["list"],
+        "service": ["list"]
+      }
+    },
+    "write": {
+      "ubus": {
+        "rc": ["init"]
+      }
+    }
+  }
 }

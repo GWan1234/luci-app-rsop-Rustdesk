@@ -10,7 +10,7 @@ jobs:
     name: Build for ${{ matrix.patch_arch }}
     runs-on: ubuntu-latest
     env:
-      project_name: "luci-app-rsop"
+      project_name: luci-app-rsop
     strategy:
       fail-fast: false
       matrix:
@@ -43,7 +43,8 @@ jobs:
         id: get_version
         shell: bash
         run: |
-          mv ${{ env.project_name }} ${{ steps.sdk.outputs.sdk_dir }}/package/
+          cd ${{ steps.sdk.outputs.sdk_dir }}/package/
+          mv ${{ env.project_name }} ./
           VERSION=$(grep -E "^PKG_VERSION[[:space:]]*:=" Makefile | sed -E 's/.*:=[[:space:]]*//' | tr -d '[:space:]')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
