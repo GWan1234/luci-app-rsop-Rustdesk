@@ -113,11 +113,6 @@ return view.extend({
       ]),
       E("div", { class: "cbi-section" }, [
         E("div", { class: "cbi-value" }, [
-          E(
-            "label",
-            { class: "cbi-value-title", for: "toggle_checkbox" },
-            _("Start Service"),
-          ),
           E("div", { class: "cbi-value-field" }, [
             E("label", { class: "cbi-checkbox" }, [
               E("input", {
@@ -126,6 +121,7 @@ return view.extend({
                 type: "checkbox",
                 change: ui.createHandlerFn(this, "handleToggle"),
               }),
+              _("Start Service"),
             ]),
           ]),
         ]),
@@ -164,55 +160,93 @@ return view.extend({
   },
 
   handleToggle: function (ev) {
-    var start = ev.target.checked;
+    this.applyCheckboxState();
+  },
 
-    if (
-      !start &&
-      !confirm(_("Are you sure you want to stop the RustDesk Server?"))
-    ) {
-      ev.target.checked = true;
-      return;
-    }
+  applyCheckboxState: function () {
+    var cb = document.getElementById("toggle_checkbox");
+    if (!cb) return Promise.resolve();
 
-    callRcInit("rsop", start ? "start" : "stop")
-      .then(function (ret) {
-        var ok = !ret;
-        if (!ok) ev.target.checked = !start;
+    var start = cb.checked;
 
-        ui.addNotification(
-          null,
-          E(
-            "p",
-            {},
-            ok
-              ? start
-                ? _("Service started.")
-                : _("Service stopped.")
-              : start
-                ? _("Failed to start the service.")
-                : _("Failed to stop the service."),
-          ),
-        );
+    var run = L.bind(
+      function () {
+        return callRcInit("rsop", start ? "start" : "stop")
+          .then(function (ret) {
+            var ok = !ret;
+            if (!ok) cb.checked = !start;
 
-        updateStatus();
-      })
-      .catch(function (e) {
-        ev.target.checked = !start;
-        ui.addNotification(
-          null,
-          E(
-            "p",
-            {},
-            (start
-              ? _("Failed to start the service.")
-              : _("Failed to stop the service.")) +
-              ": " +
-              (e.message || ""),
-          ),
-        );
+            ui.addNotification(
+              null,
+              E(
+                "p",
+                {},
+                ok
+                  ? start
+                    ? _("Service started.")
+                    : _("Service stopped.")
+                  : start
+                    ? _("Failed to start the service.")
+                    : _("Failed to stop the service."),
+              ),
+            );
 
-        updateStatus();
+            updateStatus();
+          })
+          .catch(function (e) {
+            cb.checked = !start;
+            ui.addNotification(
+              null,
+              E(
+                "p",
+                {},
+                (start
+                  ? _("Failed to start the service.")
+                  : _("Failed to stop the service.")) +
+                  ": " +
+                  (e.message || ""),
+              ),
+            );
+
+            updateStatus();
+          });
+      },
+      this,
+    );
+
+    if (!start)
+      return this.confirmStop().then(function (ok) {
+        if (ok) return run();
+        cb.checked = true;
+        return null;
       });
+
+    return run();
+  },
+
+  confirmStop: function () {
+    return new Promise(function (resolve) {
+      ui.showModal(_("Stop RustDesk Server"), [
+        E("p", {}, _("Are you sure you want to stop the RustDesk Server?")),
+        E("div", { class: "right" }, [
+          E("button", {
+            class: "cbi-button",
+            click: function (ev) {
+              ui.hideModal();
+              resolve(false);
+            },
+          }, _("Cancel")),
+          " ",
+          E("button", {
+            class: "cbi-button cbi-button-negative",
+            click: function (ev) {
+              ui.hideModal();
+              resolve(true);
+            },
+          }, _("Stop")),
+        ]),
+      ]);
+    });
   },
 
   handleCopyKey: function (ev) {
@@ -247,7 +281,18 @@ return view.extend({
     }
   },
 
-  handleSaveApply: null,
-  handleSave: null,
-  handleReset: null,
+  handleSaveApply: function (ev, mode) {
+    var cb = document.getElementById("toggle_checkbox");
+    if (cb && cb.checked !== isRunning)
+      return this.applyCheckboxState();
+    return updateStatus();
+  },
+
+  handleSave: function (ev) {
+    return this.handleSaveApply(ev, "0");
+  },
+
+  handleReset: function (ev) {
+    return updateStatus();
+  },
 });
