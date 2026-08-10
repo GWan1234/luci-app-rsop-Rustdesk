@@ -57,12 +57,20 @@ function renderStatus(binaryFound, isRunning) {
     renderHTML = spanTemp.format(
       "orange",
       _("RustDesk Server"),
-      _("BINARY MISSING"),
+      _("binary is missing"),
     );
   } else if (isRunning) {
-    renderHTML = spanTemp.format("green", _("RustDesk Server"), _("RUNNING"));
+    renderHTML = spanTemp.format(
+      "green",
+      _("RustDesk Server"),
+      _("is running"),
+    );
   } else {
-    renderHTML = spanTemp.format("red", _("RustDesk Server"), _("NOT RUNNING"));
+    renderHTML = spanTemp.format(
+      "red",
+      _("RustDesk Server"),
+      _("is not running"),
+    );
   }
   return renderHTML;
 }
@@ -79,13 +87,8 @@ async function updateStatus() {
   if (key) key.value = res[2] || "";
 
   isRunning = res[1];
-  var btn = document.getElementById("toggle_button");
-  if (btn) {
-    btn.textContent = isRunning ? _("Stop") : _("Start");
-    btn.className = isRunning
-      ? "cbi-button cbi-button-negative"
-      : "cbi-button cbi-button-action important";
-  }
+  var cb = document.getElementById("toggle_checkbox");
+  if (cb) cb.checked = isRunning;
 }
 
 return view.extend({
@@ -109,50 +112,80 @@ return view.extend({
         E("p", { id: "service_status" }, _("Collecting data...")),
       ]),
       E("div", { class: "cbi-section" }, [
-        E("h3", {}, _("Server Key")),
-        E("textarea", {
-          id: "server_key",
-          class: "cbi-input-textarea",
-          readonly: "readonly",
-          rows: "3",
-          placeholder: _("No key yet. Start the service once to generate it."),
-        }),
-        E("div", { class: "cbi-section-actions" }, [
+        E("div", { class: "cbi-value" }, [
           E(
-            "button",
-            {
-              id: "toggle_button",
-              class: "cbi-button cbi-button-action important",
-              click: ui.createHandlerFn(this, "handleAction"),
-            },
-            _("Collecting data..."),
+            "label",
+            { class: "cbi-value-title", for: "toggle_checkbox" },
+            _("Start Service"),
           ),
-          " ",
+          E("div", { class: "cbi-value-field" }, [
+            E("label", { class: "cbi-checkbox" }, [
+              E("input", {
+                id: "toggle_checkbox",
+                class: "cbi-input-checkbox",
+                type: "checkbox",
+                change: ui.createHandlerFn(this, "handleToggle"),
+              }),
+            ]),
+          ]),
+        ]),
+      ]),
+      E("div", { class: "cbi-section" }, [
+        E("div", { class: "cbi-value" }, [
           E(
-            "button",
-            {
-              class: "cbi-button cbi-button-action",
-              click: ui.createHandlerFn(this, "handleCopyKey"),
-            },
-            _("Copy"),
+            "label",
+            { class: "cbi-value-title", for: "server_key" },
+            _("Connection Public Key"),
           ),
+          E("div", { class: "cbi-value-field" }, [
+            E(
+              "div",
+              {
+                style:
+                  "display:flex; gap:8px; align-items:flex-start; width:100%;",
+              },
+              [
+                E("textarea", {
+                  id: "server_key",
+                  class: "cbi-input-textarea",
+                  readonly: "readonly",
+                  rows: "2",
+                  style: "flex:1; width:auto; min-width:0;",
+                  placeholder: _(
+                    "No key yet. Start the service once to generate it.",
+                  ),
+                }),
+                E(
+                  "button",
+                  {
+                    class: "cbi-button cbi-button-action",
+                    click: ui.createHandlerFn(this, "handleCopyKey"),
+                  },
+                  _("Copy"),
+                ),
+              ],
+            ),
+          ]),
         ]),
       ]),
     ]);
   },
 
-  handleAction: function (ev) {
-    var start = !isRunning;
+  handleToggle: function (ev) {
+    var start = ev.target.checked;
 
     if (
       !start &&
       !confirm(_("Are you sure you want to stop the RustDesk Server?"))
-    )
+    ) {
+      ev.target.checked = true;
       return;
+    }
 
     callRcInit("rsop", start ? "start" : "stop")
       .then(function (ret) {
         var ok = !ret;
+        if (!ok) ev.target.checked = !start;
 
         ui.addNotification(
           null,
@@ -172,6 +205,7 @@ return view.extend({
         updateStatus();
       })
       .catch(function (e) {
+        ev.target.checked = !start;
         ui.addNotification(
           null,
           E(

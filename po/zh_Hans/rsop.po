@@ -21,13 +21,13 @@ msgstr "如果无法从公网访问 RustDesk 服务器，请检查 21114-21119 �
 msgid "Collecting data..."
 msgstr "正在收集数据..."
 
-msgid "BINARY MISSING"
-msgstr "程序文件缺失"
+msgid "binary is missing"
+msgstr "缺少二进制文件"
 
-msgid "RUNNING"
-msgstr "运行中"
+msgid "is running"
+msgstr "正在运行"
 
-msgid "NOT RUNNING"
+msgid "is not running"
 msgstr "未运行"
 
 msgid "Server Key"
@@ -41,6 +41,12 @@ msgstr "启动"
 
 msgid "Stop"
 msgstr "停止"
+
+msgid "Start Service"
+msgstr "启动服务"
+
+msgid "Connection Public Key"
+msgstr "连接公钥"
 
 msgid "Copy"
 msgstr "复制"

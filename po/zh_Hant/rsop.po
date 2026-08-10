@@ -21,13 +21,13 @@ msgstr "如果無法從公用網際網路存取 RustDesk 伺服器，請檢查 2
 msgid "Collecting data..."
 msgstr "正在收集資料..."
 
-msgid "BINARY MISSING"
-msgstr "程式檔缺失"
+msgid "binary is missing"
+msgstr "缺少二進位檔"
 
-msgid "RUNNING"
-msgstr "執行中"
+msgid "is running"
+msgstr "正在執行"
 
-msgid "NOT RUNNING"
+msgid "is not running"
 msgstr "未執行"
 
 msgid "Server Key"
@@ -41,6 +41,12 @@ msgstr "啟動"
 
 msgid "Stop"
 msgstr "停止"
+
+msgid "Start Service"
+msgstr "啟動服務"
+
+msgid "Connection Public Key"
+msgstr "連線公鑰"
 
 msgid "Copy"
 msgstr "複製"
