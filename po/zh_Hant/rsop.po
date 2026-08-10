@@ -54,9 +54,6 @@ msgstr "複製"
 msgid "Are you sure you want to stop the RustDesk Server?"
 msgstr "確定要停止 RustDesk 伺服器嗎？"
 
-msgid "Stop RustDesk Server"
-msgstr "停止 RustDesk 伺服器"
-
 msgid "Service started."
 msgstr "服務已啟動。"
 
