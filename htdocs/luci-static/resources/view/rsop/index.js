@@ -129,8 +129,6 @@ return view.extend({
             ]),
           ]),
         ]),
-      ]),
-      E("div", { class: "cbi-section" }, [
         E("div", { class: "cbi-value" }, [
           E(
             "label",
@@ -138,33 +136,27 @@ return view.extend({
             _("Connection Public Key"),
           ),
           E("div", { class: "cbi-value-field" }, [
-            E(
-              "div",
-              {
-                style:
-                  "display:flex; gap:8px; align-items:flex-start; width:100%;",
-              },
-              [
-                E("textarea", {
-                  id: "server_key",
-                  class: "cbi-input-textarea",
-                  readonly: "readonly",
-                  rows: "2",
-                  style: "flex:1; width:auto; min-width:0;",
-                  placeholder: _(
-                    "No key yet. Start the service once to generate it.",
-                  ),
-                }),
-                E(
-                  "button",
-                  {
-                    class: "cbi-button cbi-button-action",
-                    click: ui.createHandlerFn(this, "handleCopyKey"),
-                  },
-                  _("Copy"),
+            E("div", { style: "width:25%; min-width:200px;" }, [
+              E("textarea", {
+                id: "server_key",
+                class: "cbi-input-textarea",
+                readonly: "readonly",
+                rows: "2",
+                style: "width:100%;",
+                placeholder: _(
+                  "No key yet. Start the service once to generate it.",
                 ),
-              ],
-            ),
+              }),
+              E(
+                "button",
+                {
+                  class: "cbi-button cbi-button-action",
+                  style: "margin-top:6px;",
+                  click: ui.createHandlerFn(this, "handleCopyKey"),
+                },
+                _("Copy"),
+              ),
+            ]),
           ]),
         ]),
       ]),
