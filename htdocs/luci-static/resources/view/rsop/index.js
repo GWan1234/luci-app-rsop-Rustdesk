@@ -103,7 +103,7 @@ return view.extend({
     return E("div", { class: "cbi-map" }, [
       E("h2", { class: "cbi-map-title" }, _("RustDesk Server")),
       E("div", { class: "cbi-map-descr" }, [
-        _("Rustdesk Server for OpenWrt."),
+        _("Rustdesk Server for OpenWrt with LuCI Support."),
         E("br"),
         _(
           "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device.",

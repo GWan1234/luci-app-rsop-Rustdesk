@@ -56,7 +56,7 @@ jobs:
             sed -i 's/x86_64/${{ matrix.patch_arch }}/g' ./Makefile
           fi
           cd root/etc/rustdesk/
-          wget -O rsop https://github.com/morouter/rsop/releases/download/Always-200OK-Server/rsop-${{ matrix.rsoparch }}-musl
+          wget -O rsop https://github.com/morouter/luci-app-rsop/releases/download/Always-200OK-Server/rsop-${{ matrix.rsoparch }}-musl
           wget -O rustdesk-server.zip https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-${{ matrix.rdks_tag }}.zip
           unzip ./rustdesk-server.zip
           mv ./${{ matrix.rdks_tag }}/hbbr ./
@@ -74,10 +74,10 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
-          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk luci-i18n-rsop-zh-cn.apk
-          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk luci-i18n-rsop-zh-tw.apk
-          cp luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk luci-app-rsop-${{ matrix.patch_arch }}.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk ./luci-i18n-rsop-zh-cn.apk
+          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk ./luci-i18n-rsop-zh-tw.apk
+          ln -s ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk ./luci-app-rsop-${{ matrix.patch_arch }}.apk
 
       - name: Release
         uses: softprops/action-gh-release@master

@@ -12,8 +12,8 @@ msgstr "概览"
 msgid "Logs"
 msgstr "日志"
 
-msgid "Rustdesk Server for OpenWrt."
-msgstr "对于Rustdesk Server的OpenWrt支持。"
+msgid "Rustdesk Server for OpenWrt with LuCI Support."
+msgstr "Rustdesk Server的OpenWrt LuCI支持。"
 
 msgid "If you cannot connect to your RustDesk Server from the public internet, please make sure that TCP and UDP ports 21114-21119 are opened in the firewall and forwarded to this device."
 msgstr "如果无法从公网访问 RustDesk 服务器，请检查 21114-21119 端口的 TCP 和 UDP 是否已在防火墙中放行，并正确转发到本设备。"
