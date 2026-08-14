@@ -46,7 +46,8 @@ jobs:
             - So this is a fake server that solve this problem.
             - It is an always OK Server to Fuck this error.
             ## 🙏 Acknowledgements
-            People: <https://867678.xyz>, <https://claude.ai>
+            <https://867678.xyz>
+            <https://claude.ai>
             ## ⚖️ License
             GNU AGPL-v3-or-later.
         env:

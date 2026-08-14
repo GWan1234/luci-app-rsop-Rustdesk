@@ -251,8 +251,7 @@ return view.extend({
 
   handleSaveApply: function (ev, mode) {
     var cb = document.getElementById("toggle_checkbox");
-    if (cb && cb.checked !== isRunning)
-      return this.applyCheckboxState();
+    if (cb && cb.checked !== isRunning) return this.applyCheckboxState();
     pending = false;
     return updateStatus();
   },

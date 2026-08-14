@@ -10,7 +10,7 @@ Rustdesk Server for OpenWrt with LuCI Support.
 
 ## ⬇️ Downloads
 
-[GitHub Release](https://github.com/moaeiou/luci-app-rsop/releases)
+[GitHub Release](https://github.com/morouter/luci-app-rsop/releases)
 [Always OK Server](https://github.com/morouter/luci-app-rsop/releases/tag/Always-200OK-Server)
 
 ## 📚 How to use
