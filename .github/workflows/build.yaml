@@ -75,8 +75,8 @@ jobs:
         shell: bash
         run: |
           mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
-          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk ./luci-i18n-rsop-zh-cn.apk
-          cp ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk ./luci-i18n-rsop-zh-tw.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk ./luci-i18n-rsop-zh-cn.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk ./luci-i18n-rsop-zh-tw.apk
           ln -s ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk ./luci-app-rsop-${{ matrix.patch_arch }}.apk
 
       - name: Release
@@ -95,6 +95,7 @@ jobs:
       - name: Send to mirror
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
-          local: ./luci-i18n-rsop-*.apk ./luci-app-rsop-${{ matrix.patch_arch }}.apk
+          local: luci-i18n-rsop-*.apk luci-app-rsop-${{ matrix.patch_arch }}.apk
           remote: /var/www/html/luci-app/rsop/
           key: ${{ secrets.CC_LA_KEY }}
+          extra: --delete

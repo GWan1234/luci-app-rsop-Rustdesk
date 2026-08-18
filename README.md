@@ -1,10 +1,10 @@
-# LuCI-APP-Rustdesk for OPenwrt
+# LuCI-APP-Rustdesk for Openwrt
 
 Rustdesk Server for OpenWrt with LuCI Support.
 
 ## 🚀 Features
 
-- Built-in latest version of Rustdesk-Server and always200OKserver.
+- Built-in latest version of Rustdesk-Server and A Fake API server.
 - It can run smoothly with just a few lines of commands.
 - It can be set as a daemon process and start automatically on boot.
 
@@ -13,52 +13,13 @@ Rustdesk Server for OpenWrt with LuCI Support.
 [GitHub Release](https://github.com/morouter/luci-app-rsop/releases)
 [Always OK Server](https://github.com/morouter/luci-app-rsop/releases/tag/Always-200OK-Server)
 
-## 📚 How to use
-
-> This content is outdated and applies only to versions earlier than 0.5.0.
-
-- **Run**:
-
-```
-/etc/init.d/rsop start
-```
-
-- **Restart**
-
-```
-/etc/init.d/rsop restart
-```
-
-- **Check running status**:
-
-```
-/etc/init.d/rsop status
-```
-
-- **Show Rustdesk-Server Key**
-
-```
-cat /etc/rustdesk/id_ed25519.pub
-```
-
-- **Use the built-in utils to cheking the stats**:
-
-```
-/etc/rustdesk/rustdesk-utils doctor localhost
-```
-
-- **Automatic startup**
-  It usually starts automatically. If it does not start automatically, please execute the command.
-
-```
-/etc/init.d/rsop enable
-```
-
-## 🛠 How to self-build
+## 🛠 How to build
 
 [Install, Compile and init-SDK Generic Guide](https://867678.xyz/docs/openwrt)
 
 It is assumed that you are already in the SDK root directory.
+
+If you router CPU Arch is not amd64, change `LUCI_PKGARCH:=` to your arch in `Makefile`.
 
 Additional operations are required on the source code:
 
@@ -75,12 +36,12 @@ rm -rf ./⚠️ARCH ./rustdesk-server.zip DONOTREMOVE ../../go.mod ../../main.go
 chmod +x ./hbbr ./hbbs ./rustdesk-utils ./rsop
 ```
 
-need build the Always 200OK Server?
+Build the Fake API Server
 
 ```bash
-git clone git@github.com:morouter/rsop.git
+git clone git@github.com:morouter/luci-app-rsop.git
 cd rsop
-go build
+GOOS=linux GOARCH=your/router/cpu/arch go build
 ```
 
 ## ⚖️ License

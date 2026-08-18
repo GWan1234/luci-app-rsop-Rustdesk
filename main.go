@@ -8,6 +8,8 @@ import (
 )
 
 func main() {
+	fmt.Println("Starting fake RustDesk API Server ...")
+	
 	listener, err := net.Listen("tcp", ":21114")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Port `21114` already in use.")

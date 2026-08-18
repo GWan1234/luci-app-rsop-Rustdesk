@@ -1,6 +1,7 @@
 name: Just like my liquor
 
 on:
+  push:
   workflow_dispatch:
 permissions:
   contents: write
@@ -38,7 +39,6 @@ jobs:
           files: rsop-${{ matrix.dickname }}
           body: |
             # An always 200-OK Server
-            Made use Golang `net/http` lib
             ## 🚀 Uses
             - When you using `Rustdesk-server`, The rustdesk client sometimes will be sent a post to server:21114
             ## ? Why do this
