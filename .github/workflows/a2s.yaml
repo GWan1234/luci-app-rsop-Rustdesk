@@ -17,6 +17,10 @@ jobs:
             dickname: "amd64-musl"
           - tag: "CGO_ENABLED=0 GOARCH=arm64"
             dickname: "arm64-musl"
+          - tag: "CGO_ENABLED=1"
+            dickname: "amd64-glibc"
+          - tag: "CGO_ENABLED=1 GOARCH=arm64"
+            dickname: "arm64-glibc"
 
     steps:
       - name: Checkout
@@ -39,12 +43,9 @@ jobs:
           files: rsop-${{ matrix.dickname }}
           body: |
             # An always 200-OK Server
-            ## 🚀 Uses
-            - When you using `Rustdesk-server`, The rustdesk client sometimes will be sent a post to server:21114
             ## ? Why do this
-            - But if you not bought `Rustdesk-Server-Pro`, It will be **TimeOut Error**.
-            - So this is a fake server that solve this problem.
-            - It is an always OK Server to Fuck this error.
+            - If you not bought `Rustdesk-Server-Pro`, the `21114 port` will be **TimeOut Error**.
+            - So this is a program to solve this problem, It just a Always OK WebServer by Golang and listening 21114 port.
             ## 🙏 Acknowledgements
             <https://867678.xyz>
             <https://claude.ai>

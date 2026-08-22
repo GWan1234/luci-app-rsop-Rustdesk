@@ -41,7 +41,7 @@ Build the Fake API Server
 ```bash
 git clone git@github.com:morouter/luci-app-rsop.git
 cd rsop
-GOOS=linux GOARCH=your/router/cpu/arch go build
+GOOS=linux CGO_ENABLED=0 GOARCH=your/router/cpu/arch go build
 ```
 
 ## ⚖️ License
