@@ -98,4 +98,4 @@ jobs:
           local: apks/
           remote: /var/www/html/luci-app/rsop/
           key: ${{ secrets.CC_LA_KEY }}
-          extra: --delete
+          extra: --exclude 'a2s/' --delete
