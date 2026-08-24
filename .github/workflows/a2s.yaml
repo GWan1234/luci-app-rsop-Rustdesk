@@ -14,13 +14,9 @@ jobs:
       matrix:
         include:
           - tag: "CGO_ENABLED=0"
-            dickname: "amd64-musl"
+            dickname: "amd64"
           - tag: "CGO_ENABLED=0 GOARCH=arm64"
-            dickname: "arm64-musl"
-          - tag: "CGO_ENABLED=1"
-            dickname: "amd64-glibc"
-          - tag: "CGO_ENABLED=1 GOARCH=arm64"
-            dickname: "arm64-glibc"
+            dickname: "arm64"
 
     steps:
       - name: Checkout
