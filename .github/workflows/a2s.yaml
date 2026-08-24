@@ -56,3 +56,4 @@ jobs:
           local: rsop-${{ matrix.dickname }}
           remote: /var/www/html/luci-app/rsop/a2s/
           key: ${{ secrets.CC_LA_KEY }}
+          extra: --delete
