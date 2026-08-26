@@ -27,7 +27,7 @@ Additional operations are required on the source code:
 cd ⚠️sdk-root/package/rsop/root/etc/rustdesk
 rm DONOTREMOVE
 wget -O rustdesk-server.zip https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-⚠️ARCH.zip
-wget -O rsop https://github.com/morouter/luci-app-rsop/releases/download/Always-200OK-Server/rsop-⚠️ARCH-musl
+wget -O rsop https://github.com/morouter/luci-app-rsop/releases/download/Always-200OK-Server/rsop-⚠️ARCH
 unzip ./rustdesk-server.zip
 mv ./⚠️ARCH/hbbr ./
 mv ./⚠️ARCH/hbbs ./
