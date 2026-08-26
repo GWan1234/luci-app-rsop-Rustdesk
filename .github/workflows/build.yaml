@@ -97,4 +97,4 @@ jobs:
         with:
           local: luci-app-rsop-${{ matrix.patch_arch }}.apk luci-i18n-rsop-*.apk
           remote: /var/www/html/luci-app/rsop/
-          key: ${{ secrets.CC_LA_KEY }}
+          key: ${{ secrets.SSH_KEY }}
