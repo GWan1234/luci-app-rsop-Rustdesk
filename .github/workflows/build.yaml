@@ -71,18 +71,16 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk luci-i18n-rsop-zh-cn.apk
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk luci-i18n-rsop-zh-tw.apk
-          ln -s ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk ./luci-app-rsop-${{ matrix.patch_arch }}.apk
+          mkdir -p apks
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk apks/luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk apks/luci-i18n-rsop-zh-cn.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk apks/luci-i18n-rsop-zh-tw.apk
 
       - name: Release
         uses: softprops/action-gh-release@master
         with:
           tag_name: V${{ steps.get_version.outputs.version }}
-          files: |
-            luci-i18n-rsop-*.apk
-            luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
+          files: apks/*
           body: |
             # 📝 Release Note
             - Fixes and improvements
@@ -92,6 +90,7 @@ jobs:
       - name: Send to mirror
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
-          local: luci-app-rsop-${{ matrix.patch_arch }}.apk luci-i18n-rsop-*.apk
+          local: apks/
           remote: luci-app/rsop/
           key: ${{ secrets.SSH_KEY }}
+          extra: --delete --exclude='a2s/'
