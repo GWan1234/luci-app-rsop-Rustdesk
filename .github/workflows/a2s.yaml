@@ -54,5 +54,5 @@ jobs:
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
           local: rsop-${{ matrix.dickname }}
-          remote: /var/www/html/luci-app/rsop/a2s/
+          remote: luci-app/rsop/a2s/
           key: ${{ secrets.SSH_KEY }}

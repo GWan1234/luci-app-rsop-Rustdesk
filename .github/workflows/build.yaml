@@ -30,9 +30,6 @@ jobs:
         with:
           path: ${{ env.project_name }}
 
-      - name: Preparing build environment
-        uses: moaeiou/moaeiou/actions/build-env@main
-
       - name: Prepare SDK
         id: sdk
         uses: moaeiou/moaeiou/actions/prepare-sdk@main
@@ -96,5 +93,5 @@ jobs:
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
           local: luci-app-rsop-${{ matrix.patch_arch }}.apk luci-i18n-rsop-*.apk
-          remote: /var/www/html/luci-app/rsop/
+          remote: luci-app/rsop/
           key: ${{ secrets.SSH_KEY }}
