@@ -6,7 +6,56 @@ on:
 permissions:
   contents: write
 jobs:
+  a2s:
+    name: Build Always OK Server for ${{ matrix.dickname }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tag: "CGO_ENABLED=0"
+            dickname: "amd64"
+          - tag: "CGO_ENABLED=0 GOARCH=arm64"
+            dickname: "arm64"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up Go
+        uses: actions/setup-go@main
+        with:
+          go-version: "stable"
+
+      - name: Build!
+        shell: bash
+        run: |
+          ${{ matrix.tag }} go build -o rsop-${{ matrix.dickname }}
+
+      - name: Release
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: Always-200OK-Server
+          files: rsop-${{ matrix.dickname }}
+          body: |
+            # An always 200-OK Server
+            ## ? Why do this
+            - If you not bought `Rustdesk-Server-Pro`, the `21114 port` will be **TimeOut Error**.
+            - So this is a program to solve this problem, It just a Always OK WebServer by Golang and listening 21114 port.
+            ## ⚖️ License
+            GNU AGPL-v3-or-later.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send to mirror
+        uses: moaeiou/moaeiou/actions/rsync@main
+        with:
+          local: rsop-${{ matrix.dickname }}
+          remote: luci-app/rsop/a2s/
+          key: ${{ secrets.SSH_KEY }}
+
   build:
+    needs: a2s
     name: Build for ${{ matrix.patch_arch }}
     runs-on: ubuntu-latest
     env:
@@ -71,18 +120,20 @@ jobs:
       - name: Rename compilation files
         shell: bash
         run: |
-          mkdir -p apks
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk apks/luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk apks/luci-i18n-rsop-zh-cn.apk
-          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk apks/luci-i18n-rsop-zh-tw.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-app-*.apk ./luci-app-rsop-${{ matrix.patch_arch }}.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-cn-*.apk ./luci-i18n-rsop-zh-cn.apk
+          mv ${{ steps.sdk.outputs.sdk_dir }}/bin/packages/*/base/luci-i18n-rsop-zh-tw-*.apk ./luci-i18n-rsop-zh-tw.apk
+          ln -s ./luci-app-rsop-${{ matrix.patch_arch }}.apk ./luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
 
       - name: Release
         uses: softprops/action-gh-release@master
         with:
           tag_name: V${{ steps.get_version.outputs.version }}
-          files: apks/*
+          files: |
+            luci-i18n-rsop-*.apk
+            luci-app-rsop-${{ steps.get_version.outputs.version }}-${{ matrix.patch_arch }}.apk
           body: |
-            # 📝 Release Note
+            # 📝 Release Notes
             - Fixes and improvements
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -90,7 +141,7 @@ jobs:
       - name: Send to mirror
         uses: moaeiou/moaeiou/actions/rsync@main
         with:
-          local: apks/
+          local: luci-i18n-rsop-*.apk luci-app-rsop-${{ matrix.patch_arch }}.apk
           remote: luci-app/rsop/
           key: ${{ secrets.SSH_KEY }}
-          extra: --delete --exclude='a2s/'
+          extra: --exclude='a2s/'
